@@ -243,9 +243,9 @@
           </table>
         </div>
         <div class="pager">
-          <button class="btn btn-outline-secondary" id="recordsPrevBtn" onclick="changeRecordsPage(-1)">← ย้อนกลับ</button>
+          <button class="btn btn-outline-secondary" id="recordsPrevBtn" onclick="changeRecordsPage(-1)">← Previous</button>
           <div class="pager-info" id="recordsPageInfo">-</div>
-          <button class="btn btn-outline-secondary" id="recordsNextBtn" onclick="changeRecordsPage(1)">ถัดไป →</button>
+          <button class="btn btn-outline-secondary" id="recordsNextBtn" onclick="changeRecordsPage(1)"Next →</button>
         </div>
       </div>
 
@@ -808,7 +808,7 @@
       }
 
       document.getElementById("recordsPageInfo").innerText =
-        total === 0 ? "0 รายการ" : "หน้า " + recordsPage + " / " + maxPage + " (ทั้งหมด " + total + " รายการ)";
+        total === 0 ? "0 รายการ" : "Page " + recordsPage + " / " + maxPage + " (All " + total + " Items)";
       document.getElementById("recordsPrevBtn").disabled = recordsPage <= 1;
       document.getElementById("recordsNextBtn").disabled = recordsPage >= maxPage;
     }
