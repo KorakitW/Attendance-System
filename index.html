@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Time Attendance System</title>
+  <title>Time Attendance System Ver.1.0 By Korakit.W</title>
 
   <link href="https://fonts.googleapis.com/css2?family=K2D:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -148,48 +148,49 @@
               <div class="fw-bold" id="welcomeName">-</div>
               <div class="role-tag" id="welcomeRole">-</div>
             </div>
-            <button class="btn btn-sm btn-outline-secondary" onclick="doLogout()">ออกจากระบบ</button>
+            <button class="btn btn-sm btn-outline-secondary" onclick="doLogout()">Log Out</button>
           </div>
 
           <div class="d-flex align-items-center gap-2 mb-2">
             <img id="selfiePreview" class="selfie-preview" alt="selfie">
-            <div id="geoStatus" class="small text-muted">📍 กำลังตรวจสอบตำแหน่ง...</div>
+            <div id="geoStatus" class="small text-muted">📍 Checking location...</div>
           </div>
 
           <input type="file" id="photoInput" accept="image/*" capture="user" style="display:none">
 
           <div class="row g-2 mb-2">
             <div class="col-6">
-              <button class="btn btn-success w-100" onclick="doClockIn()">🟢 เข้างาน</button>
+              <button class="btn btn-success w-100" onclick="doClockIn()">🟢 เวลาเข้างาน</button>
             </div>
             <div class="col-6">
-              <button class="btn btn-warning w-100" onclick="doClockOut()">🔴 เลิกงาน</button>
+              <button class="btn btn-warning w-100" onclick="doClockOut()">🔴 เวลาออกงาน</button>
             </div>
           </div>
 
-          <div id="message" class="alert alert-light text-center mt-2">พร้อมใช้งาน</div>
+          <div id="message" class="alert alert-light text-center mt-2"><font style="color:blue">Normal</font></div>
 
           <hr>
 
           <!-- LEAVE REQUEST -->
-          <h6 class="fw-bold">🏖️ ยื่นคำขอลา</h6>
+          <h6 class="fw-bold">📑 Leave Request</h6>
           <select id="leaveType" class="form-select form-select-sm mb-2">
             <option>ลาป่วย</option>
-            <option>ลากิจ</option>
+            <option>ลากิจ(ล่วงหน้า)</option>
+			<option>ลากิจ(ฉุกเฉิน)</option>
             <option>ลาพักร้อน</option>
-            <option>ลาอบรม</option>
+            <option>ลา(บริษัทส่งไปอบรม)</option>
           </select>
           <div class="row g-2 mb-2">
             <div class="col-6"><input type="date" id="leaveStart" class="form-control form-control-sm"></div>
             <div class="col-6"><input type="date" id="leaveEnd" class="form-control form-control-sm"></div>
           </div>
-          <textarea id="leaveReason" class="form-control form-control-sm mb-2" rows="2" placeholder="เหตุผล"></textarea>
-          <button class="btn btn-sm btn-outline-primary w-100 mb-3" onclick="doSubmitLeave()">ส่งคำขอลา</button>
+          <textarea id="leaveReason" class="form-control form-control-sm mb-2" rows="2" placeholder="Note"></textarea>
+          <button class="btn btn-sm btn-outline-primary w-100 mb-3" onclick="doSubmitLeave()">Submit</button>
 
           <div class="table-responsive" style="max-height:160px; overflow:auto;">
             <table class="table table-sm">
-              <thead><tr><th>ประเภท</th><th>วันที่</th><th>สถานะ</th></tr></thead>
-              <tbody id="myLeaveBody"><tr><td colspan="3" class="text-center text-muted">ยังไม่มีข้อมูล</td></tr></tbody>
+              <thead><tr><th>Leave Type</th><th>Date</th><th>Status</th></tr></thead>
+              <tbody id="myLeaveBody"><tr><td colspan="3" class="text-center text-muted">No Records Found</td></tr></tbody>
             </table>
           </div>
         </div>
@@ -197,19 +198,19 @@
 
       <!-- ADMIN PANEL -->
       <div class="card-box" id="adminBox" style="display:none;">
-        <h5 class="fw-bold">👨‍💼 แผงผู้ดูแลระบบ</h5>
+        <h5 class="fw-bold">🛠️ Admin Panel</h5>
 
         <div class="mb-2">
-          <label class="form-label small">เดือนสำหรับรายงาน</label>
+          <label class="form-label small">Month-End Report</label>
           <input type="month" id="reportMonth" class="form-control form-control-sm">
         </div>
         <div class="d-flex gap-2 mb-3">
-          <button class="btn btn-sm btn-outline-dark flex-fill" onclick="doExportPdf()">📄 ออก PDF</button>
-          <button class="btn btn-sm btn-outline-dark flex-fill" onclick="doGeneratePayroll()">💰 สรุปเงินเดือน</button>
+          <button class="btn btn-sm btn-outline-dark flex-fill" onclick="doExportPdf()">📄 Export PDF</button>
+          <button class="btn btn-sm btn-outline-dark flex-fill" onclick="doGeneratePayroll()">💰 Payroll Summary</button>
         </div>
 
         <button class="btn btn-sm btn-primary w-100 d-flex justify-content-between align-items-center admin-trigger-btn" onclick="openLeaveModal()">
-          <span>🏖️ คำขอลารออนุมัติ</span>
+          <span>🏖️ Pending Approval</span>
           <span class="badge bg-light text-primary" id="pendingLeaveBadge">0</span>
         </button>
       </div>
@@ -229,7 +230,7 @@
         </div>
 
         <div id="map"></div>
-        <div class="text-center small text-muted" id="orgLabel">กำลังโหลดตำแหน่งสถานที่ทำงาน...</div>
+        <div class="text-center small text-muted" id="orgLabel">Loading Work Location...</div>
       </div>
 
       <div class="card-box table-card">
@@ -239,7 +240,7 @@
             <thead>
               <tr><th>Personnel</th><th>Time In</th><th>Time Out</th><th>Working Hours</th><th>Status</th></tr>
             </thead>
-            <tbody id="recordsBody"><tr><td colspan="5" class="text-center text-muted">กำลังโหลด...</td></tr></tbody>
+            <tbody id="recordsBody"><tr><td colspan="5" class="text-center text-muted">Loading...</td></tr></tbody>
           </table>
         </div>
         <div class="pager">
@@ -257,13 +258,13 @@
 <div id="cameraOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.85);
      z-index:2000; align-items:center; justify-content:center; padding:16px;">
   <div style="background:#fff; border-radius:16px; padding:16px; max-width:420px; width:100%;">
-    <h6 class="fw-bold text-center mb-2">📸 ถ่ายภาพยืนยันตัวตน</h6>
+    <h6 class="fw-bold text-center mb-2">📸 Take Verification Photo</h6>
     <video id="selfieVideo" autoplay playsinline muted
            style="width:100%; border-radius:12px; background:#000;"></video>
-    <div class="small text-muted text-center mt-2">จัดใบหน้าให้อยู่ในกรอบแล้วกดปุ่มถ่ายภาพ</div>
+    <div class="small text-muted text-center mt-2">Position your face inside the frame and press capture</div>
     <div class="d-flex gap-2 mt-3">
-      <button class="btn btn-secondary flex-fill" onclick="cancelCameraOverlay_()">ยกเลิก</button>
-      <button class="btn btn-primary flex-fill" onclick="confirmCameraOverlay_()">📷 ถ่ายภาพ</button>
+      <button class="btn btn-secondary flex-fill" onclick="cancelCameraOverlay_()">Cancel</button>
+      <button class="btn btn-primary flex-fill" onclick="confirmCameraOverlay_()">📷 Take Photo</button>
     </div>
   </div>
 </div>
@@ -438,8 +439,8 @@
       const employeeId = document.getElementById("employee").value;
       const pin = document.getElementById("pin").value;
 
-      if (!employeeId) { Swal.fire("แจ้งเตือน", "กรุณาเลือกพนักงาน", "warning"); return; }
-      if (!pin) { Swal.fire("แจ้งเตือน", "กรุณากรอก PIN", "warning"); return; }
+      if (!employeeId) { Swal.fire("Alert", "Please select employee", "warning"); return; }
+      if (!pin) { Swal.fire("Alert", "Please enter your PIN", "warning"); return; }
 
       Swal.showLoading();
 
@@ -503,29 +504,29 @@
         orgMarker = L.marker([lat, lng]).addTo(map).bindPopup(settings.orgName || 'สถานที่ทำงาน');
         orgCircle = L.circle([lat, lng], { radius: radius, color: '#0d6efd', fillOpacity: .15 }).addTo(map);
         document.getElementById("orgLabel").innerText =
-          (settings.orgName || 'สถานที่ทำงาน') + " • รัศมีอนุญาต " + radius + " ม. • เวลาทำงาน " + settings.startTime + "-" + settings.endTime;
+          (settings.orgName || 'สถานที่ทำงาน') + " • Radius " + radius + " m. • Time " + settings.startTime + "-" + settings.endTime;
       }).catch(onFail);
     }
 
     function watchLocation() {
       if (!navigator.geolocation) {
-        document.getElementById("geoStatus").innerText = "⚠️ อุปกรณ์นี้ไม่รองรับ GPS";
+        document.getElementById("geoStatus").innerText = "⚠️ This device does not support GPS";
         return;
       }
       navigator.geolocation.watchPosition(function (pos) {
         lastPosition = { lat: pos.coords.latitude, lng: pos.coords.longitude };
 
         if (meMarker) { meMarker.setLatLng([lastPosition.lat, lastPosition.lng]); }
-        else if (map) { meMarker = L.marker([lastPosition.lat, lastPosition.lng], { title: 'ตำแหน่งของคุณ' }).addTo(map); }
+        else if (map) { meMarker = L.marker([lastPosition.lat, lastPosition.lng], { title: 'Your Location' }).addTo(map); }
 
         if (orgCircle) {
           const center = orgCircle.getLatLng();
           const dist = map.distance([lastPosition.lat, lastPosition.lng], center);
           const badge = document.getElementById("geoStatus");
           if (dist <= orgCircle.getRadius()) {
-            badge.innerHTML = '<span class="geo-badge text-success">✅ อยู่ในพื้นที่อนุญาต</span>';
+            badge.innerHTML = '<span class="geo-badge text-success">✓ Inside Area</span>';
           } else {
-            badge.innerHTML = '<span class="geo-badge text-danger">❌ ห่างจากจุดลงเวลา ' + Math.round(dist) + ' ม.</span>';
+            badge.innerHTML = '<span class="geo-badge text-danger">✕ Outside Area ' + Math.round(dist) + ' m.</span>';
           }
         }
       }, function () {
@@ -712,13 +713,13 @@
     function runClock(fnName) {
       if (!currentEmployee) return;
 
-      setStatusMessage_('📸 กำลังเปิดกล้อง กรุณารอสักครู่...', 'alert-info');
+      setStatusMessage_('📸 Starting camera, please wait...', 'alert-info');
 
       captureSelfie()
         .then(function (photo) {
           setStatusMessage_('📍 กำลังตรวจสอบตำแหน่ง GPS...', 'alert-info');
           return getPosition().then(function (pos) {
-            setStatusMessage_('💾 กำลังบันทึกข้อมูล...', 'alert-info');
+            setStatusMessage_('💾 Saving data...', 'alert-info');
             Swal.showLoading();
             return callApi(fnName, [currentEmployee.id, lastPin, pos.lat, pos.lng, photo]);
           });
@@ -747,7 +748,7 @@
       if (res.success) {
         box.className = "alert alert-success text-center mt-2";
         box.innerHTML = res.message + "<br>" + (res.time || "");
-        Swal.fire({ icon: "success", title: "สำเร็จ", text: res.message });
+        Swal.fire({ icon: "success", title: "เรียบร้อย", text: res.message });
         loadDashboard();
       } else {
         box.className = "alert alert-danger text-center mt-2";
@@ -835,7 +836,7 @@
       callApi("submitLeave", [currentEmployee.id, type, start, end, reason])
         .then(function (res) {
           Swal.close();
-          Swal.fire(res.success ? "สำเร็จ" : "ไม่สำเร็จ", res.message, res.success ? "success" : "error");
+          Swal.fire(res.success ? "เรียบร้อย" : "บันทึกไม่สำเร็จ", res.message, res.success ? "success" : "error");
           if (res.success) {
             document.getElementById("leaveReason").value = "";
             loadMyLeaves();
@@ -852,7 +853,7 @@
           const body = document.getElementById("myLeaveBody");
           body.innerHTML = "";
           if (leaves.length === 0) {
-            body.innerHTML = '<tr><td colspan="3" class="text-center text-muted">ยังไม่มีข้อมูล</td></tr>';
+            body.innerHTML = '<tr><td colspan="3" class="text-center text-muted">No Data</td></tr>';
             return;
           }
           leaves.forEach(function (l) {
@@ -869,6 +870,7 @@
 
     // ======================
     // ADMIN: คำขอลารออนุมัติ (แสดงเป็นป๊อปอัพ + แบ่งหน้า)
+    // ADMIN: คำขอลารออนุมัติ (แสดงเป็นป๊อปอัพ + แบ่งหน้า)
     // ======================
 
     function refreshPendingLeaveBadge() {
@@ -884,8 +886,8 @@
 
     function openLeaveModal() {
       Swal.fire({
-        title: '🏖️ คำขอลารออนุมัติ',
-        html: '<div id="leaveModalBody" class="text-start">กำลังโหลด...</div>',
+        title: '📑 Leave requests pending approval',
+        html: '<div id="leaveModalBody" class="text-start">Loading...</div>',
         width: 700,
         showConfirmButton: false,
         showCloseButton: true,
@@ -897,7 +899,7 @@
 
     function fetchAndRenderLeaveModal() {
       const container = document.getElementById("leaveModalBody");
-      if (container) container.innerHTML = '<div class="text-center text-muted py-3">กำลังโหลด...</div>';
+      if (container) container.innerHTML = '<div class="text-center text-muted py-3">Loading...</div>';
 
       callApi("getAllLeaves", [])
         .then(function (leaves) {
@@ -925,7 +927,7 @@
 
       let rowsHtml = '';
       if (total === 0) {
-        rowsHtml = '<tr><td colspan="5" class="text-center text-muted">ไม่มีคำขอค้างอนุมัติ</td></tr>';
+        rowsHtml = '<tr><td colspan="5" class="text-center text-muted">No pending leave requests</td></tr>';
       } else {
         const start = (leavePage - 1) * LEAVE_PER_PAGE;
         const pageItems = allPendingLeaves.slice(start, start + LEAVE_PER_PAGE);
@@ -942,12 +944,12 @@
 
       container.innerHTML =
         '<div class="table-responsive"><table class="table table-sm">' +
-        '<thead><tr><th>พนักงาน</th><th>ประเภท</th><th>วันที่</th><th>เหตุผล</th><th></th></tr></thead>' +
+        '<thead><tr><th>Full name</th><th>Leave type</th><th>Date</th><th>Reason</th><th></th></tr></thead>' +
         '<tbody>' + rowsHtml + '</tbody></table></div>' +
         '<div class="pager">' +
-        '<button class="btn btn-outline-secondary btn-sm" onclick="changeLeavePage(-1)" ' + (leavePage <= 1 ? 'disabled' : '') + '>← ย้อนกลับ</button>' +
-        '<div class="pager-info">' + (total === 0 ? '0 รายการ' : 'หน้า ' + leavePage + ' / ' + maxPage + ' (ทั้งหมด ' + total + ' รายการ)') + '</div>' +
-        '<button class="btn btn-outline-secondary btn-sm" onclick="changeLeavePage(1)" ' + (leavePage >= maxPage ? 'disabled' : '') + '>ถัดไป →</button>' +
+        '<button class="btn btn-outline-secondary btn-sm" onclick="changeLeavePage(-1)" ' + (leavePage <= 1 ? 'disabled' : '') + '>← Previous</button>' +
+        '<div class="pager-info">' + (total === 0 ? '0 Item' : 'Page ' + leavePage + ' / ' + maxPage + ' (Total ' + total + ' Item)') + '</div>' +
+        '<button class="btn btn-outline-secondary btn-sm" onclick="changeLeavePage(1)" ' + (leavePage >= maxPage ? 'disabled' : '') + '>Next →</button>' +
         '</div>';
     }
 
@@ -963,7 +965,7 @@
 
     // ✔ อนุมัติ: ทำทันทีโดยไม่ต้องระบุเหตุผล
     function approveLeave(id) {
-      setLeaveModalBusy_('กำลังบันทึก...');
+      setLeaveModalBusy_('Saving...');
       callApi("updateLeaveStatus", [id, 'อนุมัติ', ''])
         .then(function (res) {
           if (!res.success) { Swal.fire("ไม่สำเร็จ", res.message, "error"); }
@@ -978,18 +980,18 @@
     // ✘ ไม่อนุมัติ: ต้องกรอกเหตุผลก่อนถึงจะยืนยันได้
     function rejectLeave(id) {
       Swal.fire({
-        title: 'ไม่อนุมัติคำขอลา',
+        title: 'Leave request rejected',
         input: 'textarea',
-        inputLabel: 'เหตุผลที่ไม่อนุมัติ (จำเป็นต้องระบุ)',
-        inputPlaceholder: 'กรุณาระบุเหตุผลที่ไม่อนุมัติคำขอลานี้...',
+        inputLabel: 'Reason for rejection (Required)',
+        inputPlaceholder: 'Reason..',
         showCancelButton: true,
-        confirmButtonText: 'ยืนยันไม่อนุมัติ',
-        cancelButtonText: 'ยกเลิก',
+        confirmButtonText: 'Confirm rejection',
+        cancelButtonText: 'Cancel',
         confirmButtonColor: '#dc3545',
         allowOutsideClick: function () { return !Swal.isLoading(); },
         preConfirm: function (reason) {
           if (!reason || !reason.trim()) {
-            Swal.showValidationMessage('กรุณากรอกเหตุผลที่ไม่อนุมัติก่อนยืนยัน');
+            Swal.showValidationMessage('Please enter the reason for rejection before confirming');
             return false;
           }
           return callApi("updateLeaveStatus", [id, 'ไม่อนุมัติ', reason.trim()])
@@ -1012,25 +1014,25 @@
 
     function doExportPdf() {
       const month = document.getElementById("reportMonth").value;
-      if (!month) { Swal.fire("แจ้งเตือน", "กรุณาเลือกเดือน", "warning"); return; }
+      if (!month) { Swal.fire("Alert", "Please select a month", "warning"); return; }
       Swal.showLoading();
       callApi("exportMonthlyTimesheetPdf", [month])
         .then(function (res) {
           Swal.close();
           if (res.success) { window.open(res.url, '_blank'); }
-          else { Swal.fire("ไม่สำเร็จ", res.message, "error"); }
+          else { Swal.fire("Failed", res.message, "error"); }
         })
         .catch(onFail);
     }
 
     function doGeneratePayroll() {
       const month = document.getElementById("reportMonth").value;
-      if (!month) { Swal.fire("แจ้งเตือน", "กรุณาเลือกเดือน", "warning"); return; }
+      if (!month) { Swal.fire("Alert", "Please select a month", "warning"); return; }
       Swal.showLoading();
       callApi("generatePayroll", [month])
         .then(function (res) {
           Swal.close();
-          Swal.fire(res.success ? "สำเร็จ" : "ไม่สำเร็จ", res.message, res.success ? "success" : "error");
+          Swal.fire(res.success ? "Success" : "Failed", res.message, res.success ? "success" : "error");
         })
         .catch(onFail);
     }
